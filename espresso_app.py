@@ -34,29 +34,30 @@ st.markdown("Share and vote on your favorite espresso recipes for the Sage Bambi
 # Vote button styling (compact and centered vertically)
 st.markdown("""
     <style>
-    .vote-button-wrapper {
+    .recipe-row {
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100%;
-        padding-top: 0.5rem;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100%;
+    }
+    .recipe-content {
+        flex-grow: 1;
+    }
+    .vote-button-wrapper {
+        margin-left: 20px;
     }
     .vote-button-wrapper button {
-        padding: 0px !important;
-        font-size: 8px !important;
-        margin: 1px 0 !important;
-        line-height: 1 !important;
-        background-color: #ffffff !important;
+        background: rgba(255,255,255,0.1) !important;
         color: #ff6600 !important;
         border: none !important;
-        min-height: 16px !important;
-        width: 16px !important;
-        border-radius: 0px !important;
+        padding: 6px 12px !important;
+        font-size: 13px !important;
+        font-family: monospace !important;
+        cursor: pointer !important;
+        border-radius: 4px !important;
     }
     .vote-button-wrapper button:hover {
-        background-color: #ffffff !important;
-        color: #ff8533 !important;
+        background: rgba(255,255,255,0.15) !important;
     }
     .recipe-container {
         margin-bottom: 0.75rem;
@@ -69,6 +70,9 @@ st.markdown("""
     .recipe-header {
         color: #828282;
         margin-bottom: 0.25rem;
+        display: flex;
+        align-items: center;
+        gap: 4px;
     }
     .recipe-details {
         color: #ffffff;
@@ -77,19 +81,44 @@ st.markdown("""
         color: #ff6600;
         font-weight: bold;
     }
+    .upvote-text {
+        color: #ff6600;
+    }
+    .stButton {
+        display: inline-block !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
     .stButton > button {
-        background-color: #ff6600 !important;
-        color: white !important;
+        all: unset;
+        color: #ff6600 !important;
+        font-family: monospace !important;
+        font-size: 13px !important;
+        cursor: pointer !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        display: inline !important;
+        background: none !important;
         border: none !important;
+        line-height: inherit !important;
+        white-space: nowrap !important;
     }
     .stButton > button:hover {
-        background-color: #e65c00 !important;
+        text-decoration: underline !important;
+    }
+    [data-testid="column"] {
+        padding: 0 !important;
+        margin: 0 !important;
+        min-width: auto !important;
+        width: auto !important;
+        flex-shrink: 0 !important;
+    }
+    [data-testid="stHorizontalBlock"] {
+        flex-wrap: nowrap !important;
+        gap: 0 !important;
     }
     </style>
 """, unsafe_allow_html=True)
-
-# Filter by shot type
-shot_filter = st.radio("☕ Filter by Shot Type", options=["All", "Single", "Double"], horizontal=True)
 
 # Collapsible form
 with st.expander("➕ Submit a New Recipe"):
@@ -117,6 +146,9 @@ with st.expander("➕ Submit a New Recipe"):
             st.success("✅ Recipe submitted successfully!")
             st.rerun()
 
+# Filter by shot type (moved here)
+shot_filter = st.radio("☕ Filter by Shot Type", options=["All", "Single", "Double"], horizontal=True)
+
 # Apply shot type filter
 if shot_filter != "All":
     df = df[df["Shot Type"] == shot_filter]
@@ -127,46 +159,22 @@ if df.empty:
     st.info("No recipes to show yet.")
 else:
     for idx, row in df.sort_values("Score", ascending=False).iterrows():
-        col1, col2 = st.columns([9, 1])
-        with col1:
-            st.markdown(f"""
-            <div class="recipe-container">
-                <div class="recipe-header">
-                    <span class="recipe-score">{int(row['Score'])} points</span> | {row['Shot Type']} shot
-                </div>
-                <div class="recipe-details">
-                    {row['Dose']}g dose | {row['Grind Size']} grind | {row['Pre-infusion Time']}s pre-infusion
-                </div>
-                <div class="recipe-details">
-                    {row['Yield']}g yield | {row['Shot Time']} shot time
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-        with col2:
-            st.markdown('''
-            <style>
-            .custom-upvote button {
-                background: #fff !important;
-                color: #ff6600 !important;
-                border: none !important;
-                border-radius: 4px !important;
-                width: 22px !important;
-                height: 22px !important;
-                font-size: 16px !important;
-                display: flex !important;
-                align-items: center !important;
-                justify-content: center !important;
-                cursor: pointer !important;
-                padding: 0 !important;
-            }
-            .custom-upvote button:hover {
-                background: #f6f6ef !important;
-                color: #ff8533 !important;
-            }
-            </style>
-            ''', unsafe_allow_html=True)
-            if st.button("▲", key=f"up_{idx}", help="Upvote", type="secondary"):
+        header_cols = st.columns([0.5, 1])
+        with header_cols[0]:
+            st.markdown(f'<span class="recipe-score">{int(row["Score"])} points</span> | {row["Shot Type"]} shot', unsafe_allow_html=True)
+        with header_cols[1]:
+            if st.button("| upvote", key=f"up_{idx}"):
                 df.at[idx, 'Score'] += 1
                 df.to_csv(CSV_FILE, index=False)
                 st.rerun()
-            st.markdown('<div class="custom-upvote"></div>', unsafe_allow_html=True)
+        
+        st.markdown(f"""
+        <div class="recipe-container">
+            <div class="recipe-details">
+                {row['Dose']}g dose | {row['Grind Size']} grind | {row['Pre-infusion Time']}s pre-infusion
+            </div>
+            <div class="recipe-details">
+                {row['Yield']}g yield | {row['Shot Time']} shot time
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
