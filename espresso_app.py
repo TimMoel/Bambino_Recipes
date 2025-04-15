@@ -112,10 +112,20 @@ st.markdown("""
         min-width: auto !important;
         width: auto !important;
         flex-shrink: 0 !important;
+        white-space: nowrap !important;
     }
     [data-testid="stHorizontalBlock"] {
         flex-wrap: nowrap !important;
         gap: 0 !important;
+        min-width: 300px !important;
+        width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    @media (max-width: 640px) {
+        [data-testid="stHorizontalBlock"] {
+            min-width: 250px !important;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
@@ -159,9 +169,9 @@ if df.empty:
     st.info("No recipes to show yet.")
 else:
     for idx, row in df.sort_values("Score", ascending=False).iterrows():
-        header_cols = st.columns([0.3, 1])
+        header_cols = st.columns([0.15, 0.15])
         with header_cols[0]:
-            st.markdown(f'<span class="recipe-score">{int(row["Score"])} points</span> | {row["Shot Type"]} shot', unsafe_allow_html=True)
+            st.write(f'<span class="recipe-score">{int(row["Score"])} points</span> | {row["Shot Type"]} shot', unsafe_allow_html=True)
         with header_cols[1]:
             if st.button("| upvote", key=f"up_{idx}"):
                 df.at[idx, 'Score'] += 1
