@@ -159,7 +159,7 @@ if df.empty:
     st.info("No recipes to show yet.")
 else:
     for idx, row in df.sort_values("Score", ascending=False).iterrows():
-        header_cols = st.columns([0.5, 1])
+        header_cols = st.columns([0.3, 1])
         with header_cols[0]:
             st.markdown(f'<span class="recipe-score">{int(row["Score"])} points</span> | {row["Shot Type"]} shot', unsafe_allow_html=True)
         with header_cols[1]:
