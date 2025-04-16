@@ -1,0 +1,199 @@
+/* === GLOBAL CONTAINER === */
+[data-testid="stAppViewContainer"] > .main {
+    max-width: 1200px;
+    padding: 1.5rem 2rem 2rem 2rem;
+}
+
+[data-testid="stAppViewContainer"],
+[data-testid="stSidebar"] {
+    background-color: #FFFFFF;
+}
+
+/* === HEADER SECTION === */
+h1 {
+    margin-bottom: -2rem !important;
+    color: #2E2E2E;
+}
+
+/* Subtitle spacing */
+h1 + div[data-testid="stMarkdownContainer"] {
+    margin-top: 0 !important;
+    margin-bottom: 1.25rem !important;
+}
+
+h1 + div[data-testid="stMarkdownContainer"] p {
+    margin: 0 !important;
+    color: #2E2E2E;
+}
+
+/* === EXPANDER FORM === */
+section[data-testid="stExpander"] {
+    margin: 0 0 1.5rem 0 !important;
+    padding: 0 !important;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.streamlit-expanderHeader {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.streamlit-expanderHeader > button {
+    padding: 0.75rem 1rem !important;
+    font-family: monospace;
+    font-size: 14px;
+    color: #2E2E2E;
+}
+
+.streamlit-expanderContent {
+    padding: 0 !important;
+}
+
+.streamlit-expanderContent > div {
+    padding: 0.75rem 1rem !important;
+}
+
+
+/* === ORANGE HEADER BOX === */
+.full-width-box {
+    width: 100%;
+    max-width: 100%;
+    background-color: #f1660a;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin: 1.5rem 0 1rem 0;
+}
+
+.full-width-box h2 {
+    color: white !important;
+    font-size: 16px !important;
+    margin: 0 !important;
+    font-weight: normal !important;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* === RADIO FILTERS === */
+.stRadio {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 0rem !important;
+    margin: -1rem 0 -2rem 0 !important;
+    padding: 0 !important;
+}
+
+.stRadio label {
+    font-size: 14px !important;
+    font-family: monospace !important;
+    color: #222 !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem;
+    margin-bottom: 0rem !important;
+}
+
+.stRadio [role="radiogroup"] {
+    display: flex !important;
+    gap: 1.5rem !important;
+    align-items: center !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.stRadio input[type="radio"] {
+    transform: translateY(1px);
+}
+
+//* === RECIPE LIST === */
+.recipe-container {
+    margin: 1rem 0 !important;
+    padding-left: 0.5rem;
+    border-left: 3px solid #f1660a;
+}
+
+.recipe-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    margin: 0.25rem 0;
+}
+
+/* === SEPARATOR LINES === */
+.recipe-separator,
+.toggle-separator {
+    border: none;
+    border-top: 1px solid #eee;
+    margin: 1rem 0 0 0 !important;  /* top margin only */
+    width: 100% !important;
+}
+
+/* === VOTE BUTTON === */
+.vote-button-wrapper {
+    margin-left: 1rem;
+}
+
+.vote-button-wrapper button {
+    background: rgba(255,255,255,0.1) !important;
+    color: #f1660a !important;
+    border: none !important;
+    padding: 0.5rem 0.75rem !important;
+    font-size: 13px !important;
+    font-family: monospace !important;
+    cursor: pointer !important;
+    border-radius: 4px !important;
+}
+
+.vote-button-wrapper button:hover {
+    background: rgba(255,255,255,0.15) !important;
+}
+
+/* === INLINE BUTTONS === */
+.stButton {
+    display: inline-block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.stButton > button {
+    color: #f1660a !important;
+    font-family: monospace !important;
+    font-size: 13px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: none !important;
+    border: none !important;
+    line-height: inherit !important;
+    display: inline !important;
+    vertical-align: baseline !important;
+}
+
+.stButton > button:hover {
+    opacity: 0.8 !important;
+}
+
+/* === GENERAL TEXT CONTAINERS === */
+div[data-testid="stMarkdownContainer"] {
+    color: #2E2E2E;
+    width: 100% !important;
+    display: block !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+div[data-testid="stMarkdownContainer"] > div {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    white-space: nowrap !important;
+}
+
+div[data-testid="stMarkdownContainer"] p {
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: 1.4 !important;
+}
