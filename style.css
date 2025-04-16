@@ -60,10 +60,10 @@ section[data-testid="stExpander"] {
     width: 100%;
     max-width: 100%;
     background-color: #f1660a;
-    padding: 0.5rem 1rem;
+    padding: .5rem 1rem;
     border-radius: 6px;
     box-sizing: border-box;
-    margin: 1.5rem 0 1rem 0;
+    margin: 1rem 0rem 0.5rem 0;
 }
 
 .full-width-box h2 {
@@ -82,7 +82,7 @@ section[data-testid="stExpander"] {
     flex-direction: column !important;
     align-items: flex-start !important;
     gap: 0rem !important;
-    margin: -1rem 0 -2rem 0 !important;
+    margin: -1rem 0 0rem 0 !important;
     padding: 0 !important;
 }
 
@@ -98,7 +98,7 @@ section[data-testid="stExpander"] {
 
 .stRadio [role="radiogroup"] {
     display: flex !important;
-    gap: 1.5rem !important;
+    gap: 0.75rem !important;
     align-items: center !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -108,7 +108,7 @@ section[data-testid="stExpander"] {
     transform: translateY(1px);
 }
 
-//* === RECIPE LIST === */
+/* === RECIPE LIST === */
 .recipe-container {
     margin: 1rem 0 !important;
     padding-left: 0.5rem;
@@ -128,8 +128,15 @@ section[data-testid="stExpander"] {
 .toggle-separator {
     border: none;
     border-top: 1px solid #eee;
-    margin: 1rem 0 0 0 !important;  /* top margin only */
     width: 100% !important;
+}
+
+.toggle-separator {
+    margin: 5rem 0 !important;
+}
+
+.recipe-separator {
+    margin: 0rem 0 !important;
 }
 
 /* === VOTE BUTTON === */

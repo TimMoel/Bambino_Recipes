@@ -91,7 +91,10 @@ else:
     else:
         df_display = df.copy()
 
-    for idx, row in df_display.sort_values("Score", ascending=False).iterrows():
+    # Sort recipes by score (highest first), and keep original index for upvoting
+    sorted_df = df_display.sort_values("Score", ascending=False).reset_index()
+
+    for i, row in sorted_df.iterrows():
         st.markdown(
             f"""
             <div style="position: relative;">
@@ -102,23 +105,26 @@ else:
                         <span style="color: #666666"> | </span>
                         <span style="color: #666666">{row["Shot Type"]} shot</span>
                         <span style="color: #666666"> | </span>
-                        <a href="?vote={idx}" target="_self" style="color: #ff6600; text-decoration: none;">upvote</a>
+                        <a href="?vote={row['index']}" target="_self" style="color: #ff6600; text-decoration: none;">upvote</a>
                     </div>
                     <div style="font-family: monospace; font-size: 13px; margin-bottom: 4px;">
-                        <span style="color: #ff6600">{row['Dose']}</span><span style="color: #666666">g dose | </span>
-                        <span style="color: #ff6600">{row['Grind Size']}</span><span style="color: #666666"> grind | </span>
-                        <span style="color: #ff6600">{row['Pre-infusion Time']}</span><span style="color: #666666">s pre-infusion</span>
+                        <span style="color: #2E2E2E; font-weight: bold">{row['Dose']}</span><span style="color: #666666">g dose | </span>
+                        <span style="color: #2E2E2E; font-weight: bold">{row['Grind Size']}</span><span style="color: #666666"> grind | </span>
+                        <span style="color: #2E2E2E; font-weight: bold">{row['Pre-infusion Time']}</span><span style="color: #666666">s pre-infusion</span>
                     </div>
                     <div style="font-family: monospace; font-size: 13px;">
-                        <span style="color: #ff6600">{row['Yield']}</span><span style="color: #666666">g yield | </span>
-                        <span style="color: #ff6600">{row['Shot Time']}</span><span style="color: #666666"> shot time</span>
+                        <span style="color: #2E2E2E; font-weight: bold">{row['Yield']}</span><span style="color: #666666">g yield | </span>
+                        <span style="color: #2E2E2E; font-weight: bold">{row['Shot Time']}</span><span style="color: #666666"> shot time</span>
                     </div>
                 </div>
             </div>
-            <div class="recipe-separator">────────────────────────────────────────────────────────────────────────────────────────────────────</div>
             """,
             unsafe_allow_html=True
         )
+
+        # Only show the separator if it's not the last recipe
+        if i < len(sorted_df) - 1:
+            st.markdown('<hr class="recipe-separator">', unsafe_allow_html=True)
 
     # Handle upvote
     if "vote" in st.query_params:
